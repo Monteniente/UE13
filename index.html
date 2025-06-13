@@ -86,7 +86,8 @@
     <header class="md:hidden flex items-center justify-between bg-slate-800 text-white p-4 sticky top-0 z-30">
         <h1 class="text-lg font-bold">Rapport Interactif</h1>
         <button id="menu-toggle" class="p-2 rounded-md hover:bg-slate-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+             <!-- Hamburger Icon -->
+            <span class="text-2xl">☰</span>
         </button>
     </header>
 
@@ -97,27 +98,27 @@
         </div>
         <nav class="flex-1 px-4 py-6 space-y-2">
             <a href="#accueil" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span class="w-6 h-6 mr-3 text-2xl">🏠</span>
                 Accueil
             </a>
             <a href="#transformation" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                 <span class="w-6 h-6 mr-3 text-2xl">⚡️</span>
                 La Transformation
             </a>
             <a href="#benefices" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                <span class="w-6 h-6 mr-3 text-2xl">📈</span>
                 Bénéfices & Gains
             </a>
             <a href="#defis" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span class="w-6 h-6 mr-3 text-2xl">⚠️</span>
                 Défis & Coûts
             </a>
             <a href="#etude-cas" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span class="w-6 h-6 mr-3 text-2xl">📄</span>
                 Étude de Cas
             </a>
             <a href="#avenir" class="nav-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-700">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="w-6 h-6 mr-3 text-2xl">🧭</span>
                 L'Avenir
             </a>
         </nav>
@@ -308,7 +309,7 @@
 
             const appData = {
                 timeAllocation: {
-                    before: [60, 30, 10], // Saisie, Révision, Conseil
+                    before: [60, 30, 10], 
                     after: [15, 45, 40],
                     labels: ['Tâches Répétitives (Saisie, Classement)', 'Analyse & Révision', 'Conseil & Accompagnement Stratégique']
                 },
@@ -324,22 +325,25 @@
                 overlay.classList.toggle('hidden');
             }
 
-            menuToggle.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
+            if(menuToggle) {
+                menuToggle.addEventListener('click', toggleMenu);
+            }
+            if(overlay) {
+                overlay.addEventListener('click', toggleMenu);
+            }
 
             function navigateTo(targetId) {
                 const target = targetId || '#accueil';
                 
                 contentSections.forEach(section => {
-                    section.classList.toggle('active', '#' + section.id === target);
+                    if (section) section.classList.toggle('active', '#' + section.id === target);
                 });
 
                 navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === target);
+                    if (link) link.classList.toggle('active', link.getAttribute('href') === target);
                 });
                 
-                // Close mobile menu on navigation
-                if (window.innerWidth < 768) {
+                if (window.innerWidth < 768 && sidebar && overlay) {
                    sidebar.classList.add('-translate-x-full');
                    overlay.classList.add('hidden');
                 }
@@ -382,19 +386,13 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                position: 'top',
-                            },
+                            legend: { position: 'top' },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
                                         let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed !== null) {
-                                            label += context.parsed + '% du temps';
-                                        }
+                                        if (label) { label += ': '; }
+                                        if (context.parsed !== null) { label += context.parsed + '% du temps'; }
                                         return label;
                                     }
                                 }
@@ -425,27 +423,13 @@
                             backgroundColor: '#60a5fa',
                             borderColor: '#3b82f6',
                             borderWidth: 1
-                        }
-                        ]
+                        }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Heures / an / dossier'
-                                }
-                            }
-                        },
-                         plugins: {
-                            tooltip: {
-                                mode: 'index',
-                                intersect: false
-                            }
-                        }
+                        scales: { y: { beginAtZero: true, title: { display: true, text: 'Heures / an / dossier' } } },
+                        plugins: { tooltip: { mode: 'index', intersect: false } }
                     }
                 });
             }
@@ -463,11 +447,15 @@
                 });
             });
 
-            window.addEventListener('popstate', (e) => {
-                navigateTo(window.location.hash);
-            });
+            window.addEventListener('popstate', () => navigateTo(window.location.hash));
             
-            navigateTo(window.location.hash);
+            const initialHash = window.location.hash;
+            if (initialHash && document.querySelector(initialHash)) {
+                navigateTo(initialHash);
+            } else {
+                navigateTo('#accueil');
+                history.replaceState({path: '#accueil'}, '', '#accueil');
+            }
         });
     </script>
 </body>
